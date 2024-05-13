@@ -1,0 +1,138 @@
+---
+title: "Palmer Penguins Portfolio"
+author: "Emily"
+date: "2024-05-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Palmer Penguins
+
+## Download Packages
+```{r Download Packages}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Quick Views of Palmer Penguins Data Set
+```{r}
+View(penguins)
+head(penguins)
+colnames(penguins)
+```
+
+## SORT BY, ARRANGE, AND GROUP BY TO CLEAN DATA
+### Ascending Order
+```{r}
+penguins %>% 
+  arrange(bill_length_mm)
+```
+### Descending Order
+```{r}
+penguins %>% 
+  arrange(-bill_length_mm)
+```
+
+## GROUP BY and SUMMARISE
+### Get Rid of Missing Values and Get Mean Bill Length
+```{r}
+penguins %>% 
+  group_by(island) %>% 
+  drop_na() %>% 
+  summarise(mean_bill_length_mm = mean(bill_depth_mm))
+```
+
+### Get Minimum and Maximum Bill Length
+```{r}
+penguins %>% 
+  group_by(island) %>% 
+  drop_na() %>% 
+  summarise(min_bill_length_mm = min(bill_length_mm))
+
+penguins %>% 
+  group_by(island) %>% 
+  drop_na() %>% 
+  summarise(max_bill_length_mm = max(bill_length_mm))
+```
+
+### Island and Species:Mean and Max Together
+```{r}
+penguins %>% 
+  group_by(island, species) %>% 
+  drop_na() %>% 
+  summarise(max_bl = max(bill_length_mm), mean_bl = mean(bill_length_mm))
+```
+
+### Create New Data Frame to Save Results
+```{r}
+penguins_2 <- penguins%>% 
+  group_by(island, species) %>% 
+  drop_na() %>% 
+  summarise(max_bl = max(bill_length_mm), mean_bl = mean(bill_length_mm))
+
+View(penguins_2)
+```
+
+## CREATE DIFFERENT DATA VISUALIZATIONS
+
+### Color, Size, and Shape Using Scatter Plot
+```{r}
+ggplot(penguins)+
+  geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g,
+                           color= species, shape= species))
+```
+  
+```{r}
+ggplot(penguins)+
+  geom_smooth(mapping = aes(x= flipper_length_mm, y= body_mass_g,
+                           color= species))
+```
+
+```{r}
+ggplot(penguins)+
+  geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g,
+                           color= species, shape= species))+
+  facet_wrap(~species)
+```
+
+```{r}
+ggplot(penguins)+
+  geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g,
+                           color= species, shape= species))+
+  facet_grid(~species)
+```
+
+## Adding Titles and Subtitles to Data Visualizations
+
+```{r}
+ggplot(penguins)+
+  geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g,
+                           color= species, shape= species))+
+  facet_wrap(~species)+ 
+  labs(title= "Palmer Penguins Body Mass vs Flipper Length", subtitle =
+         "Sample of Three Penguin Species")
+```
+
