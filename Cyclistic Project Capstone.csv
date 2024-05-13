@@ -223,8 +223,8 @@ all_trips_v2 %>%
   ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
   geom_col(position = "dodge")
 ```
-Link to Data Visualizations below
-https://docs.google.com/document/d/1O4GKBklqUel9ezgbVO5LljteuyBHbZuLUGMPqefNq0Y/edit?usp=sharing 
+Link to Data Visualizations below. Copy and Paste it into your URL
+[Link](https://docs.google.com/document/d/1O4GKBklqUel9ezgbVO5LljteuyBHbZuLUGMPqefNq0Y/edit?usp=sharing)     
 
 "","all_trips_v2$member_casual","all_trips_v2$day_of_week","all_trips_v2$ride_length"
 "1","casual","Sunday",5059.1812674244
